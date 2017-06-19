@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <!--<script src="js/jquery-1.12.4.js"></script>-->
+    <script>
+        function Stu(name){
+        }
+        
+        //Stu.prototype.constructor = Stu;
+        //Stu.prototype.constructor = Array;
+        
+        //写法一 : 这种写法是给原型添加属性,constructor的指向不会改变,此时的constructor还是Stu
+        /*Stu.prototype.name="小明";
+        Stu.prototype.age=18;*/
+        
+        //写法二 : 这种写法是覆盖原型,原来的Stu被覆盖,所以指向被改变,此时的constructor被改变成了object
+        Stu.prototype={
+            "name":"小明",
+            "age":18
+        }
+        
+        //写法一和写法二都可以使得Stu派生出来的对象获取到name和age属性，但是原型下的constructor却不一样
+        
+        //修改原型的constructor的指向
+        
+        var stu1 = new Stu("小明");
+        alert(stu1.age);
+        alert(stu1.constructor);
+        alert(typeof JSON);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>楼梯</title>
+		<script src="js/jquery-1.12.4.js"></script>
+		<script>
+			$(function(){
+				var winHeight = $(window).height();
+				var headHeight = $(".head").height();
+				var isClick = false,
+                    isLast = false,
+                    currIndex;
+				
+				$(window).on("scroll",function(){
+					
+                    //滚动事件
+					if(!isClick){
+						var scrollTop = $(window).scrollTop();
+						if(scrollTop > headHeight - winHeight){
+							
+							$(".menu").stop(true).show();
+						}else{
+							$(".menu").stop(true).hide();
+							return;
+						}
+						
+						$(".floor").each(function(index,element){
+							var _top = $(this).offset().top;
+							if(!isLast && scrollTop > _top - winHeight /2){
+								$(".menu li").eq(index).children("a").hide().end().siblings().children("a").show();
+								$(".menu li").eq(index).children("span").show().end().siblings().children("span").hide();
+                                currIndex = index;
+							}
+						});
+					}
+				});
+				
+				//点击楼层
+				$(".menu li:lt(6)").on("click",function(){
+					isClick = true;
+					$(this).children("a").hide().end().siblings().children("a").show();
+					$(this).children("span").show().end().siblings().children("span").hide();
+					var indexx = $(this).index();
+                    currIndex = indexx;
+					var tt = $(".floor").eq(indexx).offset().top;
+					$("html,body").stop(true).animate({"scrollTop":tt},function(){
+						isClick = false;
+					});
+				});
+				
+				//鼠标划过事件
+				$(".menu li:lt(6)").on("mouseover",function(){
+					$(this).children("a").hide().end().siblings().children("a").show();
+					$(this).addClass("curr").siblings().removeClass("curr");
+					$(this).children("span").show().end().siblings().children("span").hide();
+                    $(".menu li").eq(currIndex).children("span").show().end().children("a").hide();
+				});
+				
+                //鼠标划出事件
+				$(".menu li:lt(6)").on("mouseout",function(){
+					$(this).removeClass("curr");
+                    $(this).children("a").show().end().children("span").hide();
+				});
+				
+                //返回top
+				$(".menu li:last").on("click",function(){
+                    isLast = true;
+                    $(".menu li").children("a").show().end().children("span").hide();
+					$("html,body").stop(true).animate({"scrollTop":0},1500);
+				});
+				
+			});
+		</script>
+		<style type="text/css">
+			*{margin: 0;padding: 0;}
+			body{font-family: "微软雅黑";font-size: 60px;}
+			ul,li{list-style: none;}
+			.container{width: 1000px;margin: 0 auto;}
+			.head{width: 100%;height: 1000px;background: grey;text-align: center;}
+			.foot{width: 100%;height: 600px;background: tomato;text-align: center;}
+			.floor{width: 100%;height: 1000px;text-align: center;color: #fff;}
+			.menu{position: fixed;left: 30px;bottom: 100px;width: 50px;font-size: 14px;display: none;}
+			.menu li{width: 40px;text-align: center;height: 30px;line-height: 30px;border: 1px solid #000000;position: relative;cursor: pointer;}
+			.menu a{position: absolute;width: 40px;height: 30px;line-height: 30px;text-align: center;text-decoration: none;color: #000;left: 0;top: 0;}
+			.menu span{position: absolute;width: 40px;height: 30px;text-align: center;line-height: 30px;display: none;color: red;left: 0;top: 0;}
+			.menu .curr{background: deepskyblue;}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="head">头部</div>
+			<div class="content">
+				<div class="floor" style="background: greenyellow;">1L 衣服</div>
+				<div class="floor" style="background: plum;">2L 鞋子</div>
+				<div class="floor" style="background: lightblue;">3L 电子产品</div>
+				<div class="floor" style="background: khaki;">4L 饰品</div>
+				<div class="floor" style="background: salmon;">5L 生活用品</div>
+				<div class="floor" style="background: palevioletred;">6L 书籍</div>
+			</div>
+			<div class="foot">底部</div>
+		</div>
+		<ul class="menu">
+			<li><a href="javascript:;" style="display: none;">1L</a> <span style="display: block;">衣服</span></li>
+			<li><a href="javascript:;">2L</a> <span>鞋子</span></li>
+			<li><a href="javascript:;">3L</a> <span>电子</span></li>
+			<li><a href="javascript:;">4L</a><span>饰品</span></li>
+			<li><a href="javascript:;">5L</a> <span>用品</span></li>
+			<li><a href="javascript:;">6L</a> <span>书籍</span></li>
+			<li>top</li>
+		</ul>
+	</body>
+</html>

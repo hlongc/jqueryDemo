@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>drag</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        $(function(){
+            var $box = $("#box");
+            $box.mousedown(function(ev){
+                var disX = ev.pageX - $box.offset().left;
+                var disY = ev.pageY - $box.offset().top;
+                $(document).mousemove(function(ev){
+                    var _l = ev.pageX - disX ;
+                    var _t = ev.pageY - disY ;
+                    if(_l<0){
+                        _l=0;
+                    }else if(_l>$(document).innerWidth() - $box.innerWidth()){
+                        _l=$(document).innerWidth() - $box.innerWidth();
+                    }
+                    if(_t<0){
+                        _t=0;
+                    }else if(_t>$(document).innerHeight()-$box.innerHeight()){
+                        _t=$(document).innerHeight()-$box.innerHeight();
+                    }
+                    $box.css({"left":_l,"top":_t});
+                });
+                
+                $(document).mouseup(function(){
+                    $(document).unbind("mousemove");
+                    $(document).unbind("mouseup");
+                });
+                
+                return false;
+            });
+        });
+    </script>
+    <style type="text/css">
+        *{margin: 0;padding: 0;}
+        #box{width: 200px;height: 200px;background: rgba(0,0,0,.1);position: absolute;left: 0;top: 0;cursor: move;}
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>

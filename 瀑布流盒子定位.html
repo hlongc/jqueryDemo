@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>瀑布流盒子</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        $(function(){
+            $(window).on("load",function(){
+                var conWidth = $("#container").width(),
+                    $divs    = $("#container div"),
+                    divWidth = $divs.eq(0).outerWidth(),
+                    cols     = Math.floor(conWidth/divWidth),
+                    spacing  = (conWidth - cols * divWidth)/(cols + 1),
+                    position = [],  //保存各列的高度
+                    html     = "";//html标签字符串
+
+                //建立列的盒子
+                for(var i=0;i<cols;i++){
+                    html += "<div class='col' style='display:inline-block;width:"+divWidth+"px;margin-left:"+spacing+"px;vertical-align:top;'></div>";
+                    //设置第一行的高度
+                    position.push(0);
+                }
+                //将列的盒子添加到大的容器当中
+                $(html).appendTo("#container");
+
+                //将页面中已有的图片盒子添加到列盒子中
+                $divs.detach().each(function(index,element){
+                    //计算当前遍历到的盒子所在的列的索引
+                    //var currCol = index % cols;
+                    //将当前遍历到的图片盒子添加到对应的列当中
+                    //$(".col").eq(currCol).append(element);
+
+                    //求最短列的索引
+                    var short = $.inArray(Math.min.apply(null,position),position);
+                    //将当前遍历到的元素添加到最短列中
+                    $(".col").eq(short).append(element);
+                    //修改数组元素值
+                    position[short] += $(element).outerHeight(true);
+                });
+                
+                //再加载出第13张图片到20张图片
+                //链接第13张到20张的DOM结构的字符串
+                html = "";
+                for(var i=13;i<=70;i++){
+                    html += '<div><img src="imges/'+i+'.jpg" /></div>';
+                }
+                //将13张到20张图片添加到最短列
+                $(html).each(function(index,element){
+                    //在图片内容加载完毕以后,再将图片盒子添加到最短列
+                    $(this).children('img').on("load",function(){
+                        //求最短列的索引
+                        var short = $.inArray(Math.min.apply(null,position),position);
+                        //将当前的元素添加到盒子中
+                        $(".col").eq(short).append(element);
+                        //修改数组元素值
+                        position[short] += $(element).outerHeight(true);
+                    }); 
+                });
+                
+                //为window 绑定 scroll 事件
+                var winHeight = $(window).height();
+                $(window).on("scroll",function(){
+                    //滚动距离
+                    var scrollTop = $(this).scrollTop();
+                    //最短列高度
+                    var shortest = Math.min.apply(null,position);
+                    //判断临界点
+                    if(scrollTop + winHeight > shortest){
+                        //通过ajax方式动态添加图片
+                    }
+                });
+                
+            });
+        });
+    </script>
+    <style type="text/css">
+        #container{width: 90%;margin: 10px auto;}
+        #container div{width: 200px;margin-bottom: 15px;border: 1px solid;border-radius: 5px;}
+        #container .col{border: none;}
+        img{width: 200px;}
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div><img src="imges/1.jpg" /></div>
+        <div><img src="imges/2.jpg" /></div>
+        <div><img src="imges/3.jpg" /></div>
+        <div><img src="imges/4.jpg" /></div>
+        <div><img src="imges/5.jpg" /></div>
+        <div><img src="imges/6.jpg" /></div>
+        <div><img src="imges/7.jpg" /></div>
+        <div><img src="imges/8.jpg" /></div>
+        <div><img src="imges/9.jpg" /></div>
+        <div><img src="imges/10.jpg" /></div>
+        <div><img src="imges/11.jpg" /></div>
+        <div><img src="imges/12.jpg" /></div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

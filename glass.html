@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>放大镜</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        $(function(){
+            var $mid = $("#mid");
+            var $empty = $("#empty");
+            var $imgs  = $("#small img");
+            var $larger = $("#large");
+            var $l_img = $("#large>img");
+            var $m_img = $("#mid>img");
+            
+            //鼠标移入与移出
+            $("#mid").hover(function(){
+                $("#large,#empty").css("display","block");
+            },function(){
+                $("#empty,#large").css("display","none");
+            });
+            
+            
+            $mid.mousedown(function(){
+                return false;
+            });
+            
+            //悬浮框移动
+            $empty.mousedown(function(ev){
+                var disX = ev.pageX - $mid.position().left ;
+                var disY = ev.pageY - $mid.position().top ;
+                $(document).mousemove(function(ev){
+                    var _l = ev.pageX - disX ;
+                    var _t = ev.pageY - disY ;
+
+                    if(_l<0){
+                        _l=0;
+                    }else if(_l>$mid.innerWidth()-$empty.innerWidth()){
+                        _l=$mid.innerWidth()-$empty.innerWidth();
+                    }
+                    if(_t<0){
+                        _t=0;
+                    }else if(_t>$mid.innerHeight()-$empty.innerHeight()){
+                        _t=$mid.innerHeight()-$empty.innerHeight();
+                    }
+                    
+                    $empty.css({"left":_l,"top":_t});
+                    
+                    var percentX = _l/($mid.innerWidth()-$empty.innerWidth());
+                    var percentY = _t/($mid.innerHeight()-$empty.innerHeight());
+                    
+                    var _ll = -percentX * ($l_img.innerWidth() - $larger.innerWidth());
+                    var _tt = -percentY * ($l_img.innerHeight() - $larger.innerWidth());
+                    
+                    $l_img.css({"left":_ll,"top":_tt});
+                });
+                
+                $(document).mouseup(function(){
+                    $(document).unbind("mousemove");
+                    $(document).unbind("mouseup");
+                });
+                
+                return false;
+            });
+            
+            //选项卡切换
+            /*$imgs.each(function(index,element){
+                $(element).mouseover(function(){
+                    $(this).addClass("redbor").siblings().removeClass("redbor");
+                    $l_img.prop("src",$(element).prop("src"));
+                    $m_img.prop("src",$(element).prop("src"));
+                });
+            });*/
+           
+           $imgs.mouseover(function(){
+           	    $(this).addClass("redbor").siblings().removeClass("redbor");
+                $l_img.prop("src",$(this).prop("src"));
+                $m_img.prop("src",$(this).prop("src"));
+           });
+            
+        });
+    </script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        
+        img{
+            vertical-align: bottom;
+        }
+        
+        ul,li{
+            list-style: none;
+        }
+        
+        #box{
+            width: 350px;
+            height: auto;
+            padding: 10px;
+            background: #eee;
+            position: relative;
+        }
+        
+        ul{
+            margin-top: 10px;
+            height: 84px;
+        }
+        
+        ul li{
+            float: left;
+            width: 84px;
+            height: 84px;
+            margin-right: 3px;
+            cursor: pointer;
+        }
+        ul li img{
+            width: 80px;
+            height: 80px;
+            border: 2px solid #fff;
+        }
+        
+        .redbor{
+            border-color: red ;
+        }
+        
+        #large{
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            top: 50px;
+            left: 450px;
+            display: none;
+            overflow: hidden;
+        }
+        
+        #large img{
+            width: 700px;
+            height: 700px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        #empty{
+            width: 70px;
+            height: 70px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: url(img/icon.png) repeat 0 0;
+            display: none;
+            cursor: move;
+        }
+        
+        #mid{
+            position: relative;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div id="large">
+            <img src="img/img01.jpg" />
+        </div>
+        <div id="mid">
+            <img src="img/img01.jpg" />
+            <span id="empty"></span>
+        </div>
+        <ul id="small">
+            <li><img src="img/img01.jpg" /></li>
+            <li><img src="img/img02.jpg" /></li>
+            <li><img src="img/img03.jpg" /></li>
+            <li><img src="img/img04.jpg" /></li>
+        </ul>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        //DOM操作
+        $(function(){
+            //创建节点
+            /*var $div = $("<div></div>");
+            $div.attr("id","container");*/
+            var $div = $("<div id='container' style='width:200px;height:200px;background:red'></div>");
+            /*$("#box").append($div);*/
+            /*($div).appendTo($("#box"));*/
+            //头部添加元素
+            //$("#box").prepend($div);
+            //$("#box").after($div);  //在大盒子外部后面插入元素
+            //$("#box").before($div);    //在大盒子外部前面插入元素
+            //$div.insertBefore("#box");
+            /*console.log($div.length);
+            var $another = $div.appendTo($(".last")).css("background","black");
+            console.log($another.length);*/
+            //appenTo,prepenTo, insertBefore, insertAfter, 和 replaceAll具有破坏性
+            //替换节点
+            
+        });
+    </script>
+    <style type="text/css">
+        .first,.last{width: 200px;height: 200px; border: 1px solid #ccc;}
+        #box{border: 5px solid skyblue;}
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div class="first">第一个盒子</div>
+        <div class="last">最后一个盒子</div>
+    </div>
+    <p class="last">p段落</p>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

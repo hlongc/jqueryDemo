@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>瀑布流最短排序</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        $(function(){
+            var boxWidth = $("#box").width(),
+                $divs = $("#box div"),
+                len    = $("#box div").length,
+                divWidth = $divs.eq(0).width(),
+                col = Math.floor(boxWidth/divWidth),
+                vspacing = 10,
+                spacing = ( boxWidth - col * divWidth )/( col + 1 ),
+                position = [];
+            console.log(boxWidth+" "+len+" "+divWidth+" "+col+" "+spacing);
+            
+            $divs.detach().each(function(index,element){
+                var num;
+                $("#box").append(element);
+                if(index<col){
+                    num = index;
+                    position.push(vspacing);
+                }else{
+                    num = min(position);
+                }
+                $(element).css({
+                    "top":position[num],
+                    "left":num * divWidth + (num+1) * spacing
+                });
+                position[num] += $(element).innerHeight() + vspacing;
+            });
+            
+            function min(arr){
+                debugger;
+                var tag = arr[0],index=0;
+                for(var i=0;i<arr.length;i++){
+                    if(tag>arr[i]){
+                        tag = arr[i];
+                        index = i;
+                    }
+                }
+                return index;
+            }
+            
+        });
+    </script>
+    <style type="text/css">
+        *{margin: 0;padding: 0;opacity: 1;filter: alpha(opacity=100);}
+        img{width: 200px;}
+        #box{width: 90%;position: relative;margin: 20px auto 0;}
+        #box div{width: 200px;position: absolute;padding: 5px;border: 1px solid #ccc;border-radius: 5px;}
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div><img src="img/1.jpg" /></div>
+        <div><img src="img/2.jpg" /></div>
+        <div><img src="img/3.jpg" /></div>
+        <div><img src="img/4.jpg" /></div>
+        <div><img src="img/5.jpg" /></div>
+        <div><img src="img/6.jpg" /></div>
+        <div><img src="img/7.jpg" /></div>
+        <div><img src="img/8.jpg" /></div>
+        <div><img src="img/9.jpg" /></div>
+        <div><img src="img/10.jpg" /></div>
+        <div><img src="img/11.jpg" /></div>
+        <div><img src="img/12.jpg" /></div>
+        <div><img src="img/13.jpg" /></div>
+        <div><img src="img/14.jpg" /></div>
+        <div><img src="img/15.jpg" /></div>
+        <div><img src="img/16.jpg" /></div>
+        <div><img src="img/17.jpg" /></div>
+        <div><img src="img/18.jpg" /></div>
+        <div><img src="img/19.jpg" /></div>
+        <div><img src="img/20.jpg" /></div>
+    </div>
+</body>
+</html>

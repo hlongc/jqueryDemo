@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件绑定</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        $(function(){
+            /*$(".outer").mouseenter(function(){
+                console.log("mouse over");
+            });*/
+            /*$(".outer").bind("mouseover",function(){
+                console.log("来了");
+            });
+            $(".outer").unbind("mouseover");*/
+            //事件委托:利用事件冒泡的特性，将在后代元素上触发的事件委派给祖先元素处理
+            //适用于当前或者未来的元素
+            /*$("body").delegate(".inner","click",function(){
+                alert("1");
+            });
+            
+            $("#btn").click(function(){
+                $('<div class="inner"></div>').appendTo(".outer");
+            });*/
+            //on事件冒泡
+            /*$(".outer").on("click",function(){
+                alert("1");
+            });*/
+            //on实现delegate功能
+            /*$(".outer").on("click",".inner",function(){
+                alert("1");
+            });*/
+            
+            //$(".inner:first").trigger("click");
+            //$(".inner:first").click();
+            
+            /*$(".outer").on("add",function(event,num1,num2){
+                alert(num1+num2);
+            });
+            $(".outer").trigger("add",[5,10]);*/
+            
+            /*$(":text,:password").focus(function(){
+                $(this).val("in");
+            });
+            
+            //触发事件，但是不会做默认操作
+            $(":text").triggerHandler("focus");*/
+            
+            //事件合成  mouseenter 和 mouseleave
+            /*$(".outer").hover(function(){
+                console.log("进入");
+            },function(){
+                console.log("离开");
+            }).trigger("mouseenter");*/
+        });
+    </script>
+    <style type="text/css">
+        .outer{width: 200px;height: 200px;background: red;}
+        .inner{width: 100px;height: 100px;background: yellow;margin-bottom: 5px;}
+    </style>
+</head>
+<body>
+   <button id="btn">点击</button>
+   <input type="text" placeholder="用户名" id="username">
+   <input type="password" placeholder="密码" id="password" >
+    <div class="outer">
+        <div class="inner"></div>
+        <div class="inner"></div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

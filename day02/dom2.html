@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dom2</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        $(function(){
+            $("#add").click(function(){
+                $("#tab tr:eq(1)").clone(true,true).insertBefore("#tab tr:last-child");
+            });
+            
+            //删除所在行
+            $(".del").click(function(){
+                $(this).parents("tr").remove();
+            });
+            
+            //全选
+            $(":checkbox:first").click(function(){
+                $(":checkbox:not(:first)").prop("checked",$(this).prop("checked"));
+            });
+            
+            //attr 和 prop区别
+        });
+    </script>
+    <style type="text/css">
+        #tab{border-collapse: collapse;border-spacing: 0;border: 1px solid #ccc;width: 700px;}
+        th,td{text-align: center;}
+    </style>
+</head>
+<body>
+   <button id="add">添加</button>
+    <table id="tab">
+        <tr>
+            <th><input type="checkbox" />全选</th>
+            <th>序号</th>
+            <th>商品名字</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>小计</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>1</td>
+            <td>笔记本电脑</td>
+            <td>4999</td>
+            <td>1</td>
+            <td>4999</td>
+            <td><a class="del" href="javascript:;">删除</a></td>
+        </tr>
+        <tr>
+            <td>总计</td>
+            <td>1</td>
+            <td>笔记本电脑</td>
+            <td>4999</td>
+            <td>1</td>
+            <td>4999</td>
+            <td><a href="javascript:;">删除</a></td>
+        </tr>
+    </table>
+</body>
+</html>

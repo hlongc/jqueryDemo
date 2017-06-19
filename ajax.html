@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>瀑布流</title>
+<script src="js/jquery-1.12.4.js"></script>
+<script>
+	$(function(){
+		$(window).on("load",function(){
+			var conWidth = $("#container").width(),
+			    $divs     = $("#container div"),
+			    divWidth = $divs.eq(0).width(),
+			    cols       = Math.floor(conWidth/divWidth),
+			    spacing   = (conWidth - cols * divWidth)/(cols + 1),
+			    position  = [],
+			    html      = "";
+			    
+			console.log(cols);
+			
+			//创建列盒子
+			for (var i = 0; i < cols; i++) {
+                html += "<div class='col' style='display:inline-block; width:"+ divWidth +"px; margin-left:"+ spacing +"px; vertical-align:top;'></div>";
+                // 设置第一行的列高
+                position.push(0);
+            }
+			
+			//把列盒子加入到大盒子中
+			$(html).appendTo("#container");
+			
+			//把图片盒子放到列盒子中
+		    $divs.detach().each(function(index,element){
+		    	//获取最短位置索引
+		    	var short = $.inArray(Math.min.apply(null,position),position);
+		    	$(".col").eq(short).append(element);
+		    	position[short] += $(element).outerHeight(true);
+		    });
+		    
+		    //加载 13 到 20 张图片
+		    html="";
+		    for(var i=13;i<=20;i++){
+		    	html += "<div><img src=img/"+i+".jpg /></div>";
+		    }
+			$(html).each(function(index,element){
+				$(this).children("img").on("load",function(){
+					var short = $.inArray(Math.min.apply(null,position),position);
+					$(".col").eq(short).append(element);
+					position[short] += $(element).outerHeight(true);
+				});
+			});
+			
+			//动态加载图片
+			var winHeight = $(window).height(),load = false;
+			$(window).on("scroll",function(){
+				var scroll = $(this).scrollTop();
+				var shortest = Math.min.apply(null,position);
+				if(!load && winHeight + scroll > shortest ){
+					load = true;
+					$(".load").show();
+					$.ajax({
+						type:"get",
+						url:"http://apis.baidu.com/txapi/mvtp/meinv",
+						headers:{apikey : "2c6d2927ef76200697018e989f6afbbb"},
+						dataType:"json",
+						data:{num:30},
+						success:function(data){
+							html="";
+							$.each(data.newslist,function(index,element){
+								html += "<div><img src="+element.picUrl+" /></div>";
+							});
+							$(html).each(function(index,element){
+								$(this).children("img").on("load",function(){
+									var short = $.inArray(Math.min.apply(null,position),position);
+									$(".col").eq(short).append(element);
+									position[short] += $(element).outerHeight(true);
+								});
+							});
+							load = false;
+							$(".load").hide();
+						}
+					});
+				}
+			});
+			
+		});
+	})
+</script>
+<style type="text/css">
+	*{margin: 0;padding: 0;}
+	img{width: 200px;}
+	#container{width: 85%;margin: 0 auto;}
+	#container div{width: 200px;margin-top: 10px;border: 1px solid #000;}
+	.load{position: fixed;bottom: 0;left: 0;display: none;}
+	.load img{width: 20px;}
+	#container .col{border: none;}
+</style>
+</head>
+<body>
+	<div id="container">
+		<div><img src="img/1.jpg" /></div>
+		<div><img src="img/2.jpg" /></div>
+		<div><img src="img/3.jpg" /></div>
+		<div><img src="img/4.jpg" /></div>
+		<div><img src="img/5.jpg" /></div>
+		<div><img src="img/6.jpg" /></div>
+		<div><img src="img/7.jpg" /></div>
+		<div><img src="img/8.jpg" /></div>
+		<div><img src="img/9.jpg" /></div>
+		<div><img src="img/10.jpg" /></div>
+		<div><img src="img/11.jpg" /></div>
+		<div><img src="img/12.jpg" /></div>
+	</div>
+	<div class="load"><img src="img/load.gif" /></div>
+</body>
+</html>

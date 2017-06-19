@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #box{
+            width: 100px;
+            height: 100px;
+            margin: 100px; 
+            border-width: 50px;
+            border-bottom-color: yellow;
+            border-top-color: green;
+            border-left-color: skyblue;
+            border-right-color: palevioletred;
+            border-style: solid;
+            border-radius: 50%;
+            -webkit-animation:circle 5s infinite linear;/*匀速 循环*/
+        }
+        @-webkit-keyframes circle{
+            0%{ transform:rotate(0deg); }
+            25%{ transform:rotate(-90deg); }
+            50%{ transform:rotate(-180deg); }
+            75%{ transform:rotate(-270deg); }
+            100%{ transform:rotate(-360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>

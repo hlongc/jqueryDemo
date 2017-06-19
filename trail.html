@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽</title>
+    <script>
+        window.onload = function(){
+            var oBox = document.getElementById("box");
+            
+            oBox.onmousedown = function(ev){
+                ev = ev || event;
+                var disX = ev.clientX - oBox.offsetLeft;
+                var disY = ev.clientY - oBox.offsetTop;
+                
+                if(oBox.setCapture){
+                    oBox.setCapture();
+                }
+                document.onmousemove = function(ev){
+                    var _left = ev.clientX - disX;
+                    var _top  = ev.clientY - disY;
+                    if(_left<100){
+                        _left=0;
+                    }else if(_left>document.documentElement.clientWidth-oBox.offsetWidth-100){
+                        _left=document.documentElement.clientWidth-oBox.offsetWidth;
+                    }
+                    if(_top<100){
+                        _top=0;
+                    }else if(_top>document.documentElement.clientHeight-oBox.offsetHeight-100){
+                        _top=document.documentElement.clientHeight-oBox.offsetHeight
+                    }
+                    
+                    oBox.style.left=_left + 'px';
+                    oBox.style.top=_top + 'px';
+                }
+                
+                document.onmouseup = function(){
+                    document.onmousemove=null;
+                    document.onmouseup=null;
+                    
+                    if(oBox.releaseCapture){
+                        oBox.releaseCapture();
+                    }
+                }
+                
+                return false;
+            }
+        }
+    </script>
+    <style>
+        *{margin: 0;padding: 0;}
+        #box{width: 150px;height: 150px;position: absolute;left: 0;top: 0;background: red;cursor: move;}
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <div>1242422</div>
+</body>
+</html>

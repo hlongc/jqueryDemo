@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        $(function(){
+            var conwidth = $("#con").innerWidth(),
+                conheight = $("#con").innerHeight(),
+                boxwidth = $("#box").width(),
+                boxheight = $("#box").height();
+            
+            $("#box").on("mousedown",function(ev){
+                var disX = ev.pageX - $("#box").offset().left;
+                var disY = ev.pageY - $("#box").offset().top;
+                
+                $(document).on("mousemove",function(ev){
+                    var _l = ev.pageX - disX;
+                    var _t = ev.pageY - disY;
+                    
+                    $("#box").offset({
+                        "top":_t,
+                        "left":_l
+                    });
+                    
+                    var l = $("#box").position().left;
+                    var t = $("#box").position().top;
+                    
+                    if(l<0){
+                        l=0;
+                    }
+                    if(t<0){
+                        t=0;
+                    }
+                    if(l>conwidth-boxwidth){
+                        l=conwidth-boxwidth;
+                    }
+                    if(t>conheight-boxheight){
+                        t=conheight-boxheight;
+                    }
+                    
+                    $("#box").css({
+                        "top":t,
+                        "left":l
+                    });
+                    
+                });
+                
+                $(document).on("mouseup",function(){
+                    $(document).off("mousemove");
+                });
+            });
+            
+        });
+    </script>
+    <style type="text/css">
+        *{margin: 0;padding: 0;}
+        #con{width: 400px;height: 400px;position: absolute;left: 100px;top: 100px;border-style: solid;border-width: 10px 5px 7px 15px;border-color: black;}
+        #box{width: 100px;height: 100px;position: absolute;left: 50px;top: 50px;background: red;}
+    </style>
+</head>
+<body>
+    <div id="con">
+        <div id="box"></div>
+    </div>
+</body>
+</html>

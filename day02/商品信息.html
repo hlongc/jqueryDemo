@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品信息</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script>
+        $(function(){
+            //点击添加到购物车
+            $("#tab a").click(function(){
+                //获取商品信息 id name price
+                var $tr = $(this).parents("tr");
+                var product = {
+                    id : $tr.children(".id").text(),
+                    name : $tr.children(".name").text(),
+                    price : $tr.find(".price").text(),
+                    number : 1
+                };
+                $.cookie.json = true;
+                var products = $.cookie("products");
+                //判断是否读取到数组
+                if(!products){ //未读取到，说明是第一次添加购物车，则创建数组对象
+                    products = [];
+                }
+                // 判断数组中是否存在当前选购商品
+                var index = findIndex(product.id, products);
+                if(index === -1){ //数组中不存在当前选购商品
+                    //将当前次添加到购物车的商品保存到数组中
+                    products.push(product);
+                }else{ //数组中存在当前选购商品
+                    //数量累加
+                    products[index].number++;	
+                }
+                //console.log(JSON.stringify(product));
+
+                //将数组保存回 cookie
+                $.cookie("products",products,{expires:7,path:"/"});
+                
+                
+            });
+            function findIndex(id,products){
+                for(var i in products){
+                    if(products[i].id === id)
+                    return i;
+                }
+                return -1;
+                }
+        });
+
+            
+    </script>
+    <style type="text/css">
+        table{border: 1px solid #000;border-spacing: 0;}
+        td{border: 1px solid #000;text-align: center;}
+        body{font-family: "微软雅黑";}
+    </style>
+</head>
+<body>
+    <table id="tab">
+        <tr>
+            <td>序号</td>
+            <td>商品名称</td>
+            <td>单价</td>
+            <td>操作</td>
+        </tr>
+        <tr>
+            <td class="id">1</td>
+            <td class="name">笔记本电脑</td>
+            <td class="price">4999</td>
+            <td><a href="javascript:;">添加到购物车</a></td>
+        </tr>
+        <tr>
+            <td class="id">2</td>
+            <td class="name">跑步机</td>
+            <td class="price">3999</td>
+            <td><a href="javascript:;">添加到购物车</a></td>
+        </tr>
+        <tr>
+            <td class="id">3</td>
+            <td class="name">按摩椅</td>
+            <td class="price">2999</td>
+            <td><a href="javascript:;">添加到购物车</a></td>
+        </tr>
+    </table>
+    <a href="%E8%B4%AD%E7%89%A9%E8%BD%A6.html" target="_blank">查看购物车</a>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
